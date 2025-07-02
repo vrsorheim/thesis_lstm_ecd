@@ -1,0 +1,6 @@
+INITIAL DEPTHS
+# {Well [m]}  {Bit [m]}
+1380.289 1330.617
+# Min and max relative depths: -0.310 m, 1103.346 m
+startTime: 2020-02-19 08:00:02.116000+01:00
+endTime: 2021-02-20 09:59:58.478000+01:00
