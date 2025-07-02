@@ -1,0 +1,418 @@
+# INPUT FILE IDSIM
+# Lines staring with a # are interpreted as comments
+#
+# All depths are relative to drilling floor (RKB)
+#
+# CMP pump at 1500 m, high viscosity 1.8 sg mud
+#
+UNITS
+# Specify units, modifying the integer numbers which must be on separate lines:
+#
+# Depth: 0 = m; 1 = ft
+  0
+# Volume: 0 = m3; 1 = Barrel
+  0
+# Pressure: 0 = bar; 1 = psi
+  0
+# Density: 0 = kg/m3; 1 = ppg; 2 = sg
+  2
+# Liquid flow rate: 0 = l/min; 1 = gpm
+  0
+# Gas flow rate: 0 = m3/min; 1 = scf/min
+  0
+# Temperature: 0 = Celsius; 1 = Fahrenheit
+  0
+# Diameter: 0 = meter; 1 = inch
+  1
+#
+INITIAL DEPTHS
+# {Well [m]}   {Bit [m]}
+   1380.289      1330.617
+#
+GEOMETRY
+#
+Riser
+# {Length [m]} {Inner diam. [in.]} {Outer diam. [in.]}
+   442	19.25	21
+ Seawater
+# {Surface [m]} {Sea bed [m]}
+  0             223
+#
+Survey
+0       0   	0   0
+442		442		0	0
+957		957		0	0
+1417	1417	0	0
+1678	1678	0	0
+1691	1691	0	0
+1852	1852	0	0
+3076	3051	0	0
+3129	3104	0	0
+3179	3154	0	0
+#
+  Casing/Open hole
+#
+# NOTE that currently casing down to bit position is required, so add
+# open hole as a separate "casing". Casing shoe is taken to be top of
+# lowermost section.
+# {Top [m]} {Bottom [m]} {Inner diam. [in.]} {Outer diam. [in.]}
+    442      456            32			36
+    456      514            28          30                                    
+    514      525            19          22
+	525      1370			12.347		13.375
+	1370	 2855			12.25		-1
+#
+MultiFluids=On
+#
+#
+  Drillstring
+#  Specify total length
+#  {Length m} {Inner diam [in.]} {Outer diam. [in.]} {Tool joint length [m]} {Tool joint id [in.] } {Tool joinint od [in.] }
+ 4000  	 5.9	6.625	0.58	4.250	8.250	8.6868	-1	
+ 1170    4.778	5.500	0.73	4.000	6.750	12.19	-1	
+ 113.00  3.250	5.500	1.5		3.250	6.750	8.6868	-1	
+ 1.10 	 3.000	8.000	0		0.000	0.000	8.6868	-1	
+ 9.40 	 2.875	8.000	0		0.000	0.000	8.6868	-1	
+ 10.00 	 2.750	8.000	0		0.000	0.000	8.6868	-1	
+ 28.20 	 2.875	8.000	0		0.000	0.000	8.6868	-1	
+ 10.00 	 2.750	8.000	0		0.000	0.000	8.6868	-1	
+ 63.00 	 2.875	8.000	0		0.000	0.000	8.6868	-1	
+ 0.72 	 3.000	8.000	0		0.000	0.000	8.6868	-1				
+ 3.10 	 3.000	8.000	0		0.000	0.000	8.6868	-1			
+ 3.15 	 2.375	8.000	0		0.000	0.000	8.6868	-1	
+ 1.50 	 3.000	8.000	0		0.000	0.000	8.6868	-1	
+ 2.92 	 1.920	8.000	0		0.000	0.000	8.6868	-1	
+ 6.26 	 2.375	8.000	0		0.000	0.000	8.6868	-1		
+ 1.00 	 2.375	8.000	0		0.000	0.000	8.6868	-1	
+ 5.34 	 2.375	8.000	0		0.000	0.000	8.6868	-1	
+ 4.97 	 2.375	8.000	0		0.000	0.000	8.6868	-1	
+ 7.72 	 2.375	8.000	0		0.000	0.000	8.6868	-1	
+ 1.00 	 2.375	8.000	0		0.000	0.000	8.6868	-1	
+ 2.80 	 3.500	8.000	0		0.000	0.000	8.6868	-1	
+ 8.16 	 5.450	8.000	0		0.000	0.000	8.6868	-1	
+ 0.39 	 3.000	12.25	0		0.000	0.000	8.6868	-1	
+#
+  Bit
+# Max 5 nozzles
+# {Nozzle diameters in/32}
+#   14 14 14 14 14 14 14 14 14
+# To get better fit with measured SPP, reduce from 9 to 5 nozzles:
+#   14 14 14 14 14
+# Up one, the new about half area
+   14 14 14 14 14 10
+#
+PLATFORM
+   Pump
+#Bruker bare liters per strokes og cross flow rate
+# {pump Rate [l/min]} {pump rate change l/min^2} {liters per strokes}  {Cross flow rate [l/min]}
+    1000D0              1000000.0                     18.876                    0
+#
+DRILLING_FLUID_PROPERTIES
+#
+# Fluid names: No spaces, max 20 characters.
+#
+# Volume percentages of oil and water are adjusted to match fluid density.
+#
+# Water density models (currently used for whole mud).
+#   0: Pressure and temperature independent density.
+#   1: Water density correlation, scaled to input density [Ali Danesh].
+#   2: Integration of compressibility correlation for gas free water [Ali Danesh].
+#   3: Water density correlation, scaled to input density [PhD, Rolv Rommetveit].
+#   4: Water density correlation, scaled to input density [D. R. Babu].
+#
+# Definitions:
+#   "Fluid" = combined fluid, i.e. oil + water + weight material
+#   "Water" = water or brine
+#
+# The numbers under 600RPM, ... are Fann dial readings, which are proportional
+# to shear stress, and approximately equal to shear stress in lbf/100ft^2.
+#
+#----------------------------------
+         FLUID_NAME obm1
+#------------^------------------^---
+#
+Density (density is required, model number is optional)
+# { density }  {density model } {Density ref temp}
+# {   sg    }  {      -       } {   deg C        }
+     1.55            6                15
+#
+ Fluid_Components (optional)
+# If missing, 100 % water phase is assumed.
+# {volume % } {    densities     } {  density model } {Density ref temp}
+# {oil water} {oil   water solid } { oil water solid} { oil     water  }
+# { %    %  } { sg    sg    sg   } {                } {    deg C       }
+   75   25     0.78  1.21   4.00      7   5    -1        15       15
+#
+    PVT_oil
+# First row temperatures [deg. C]
+# Other rows pressure [bar] and densities [g/cc]
+        4               20              50              75              100             125             150             175             200
+1.000   0.806125        0.800000        0.780827        0.763662        0.746678        0.728862        0.710629        0.691998        0.672913
+14.790  0.806817        0.800736        0.781693        0.764649        0.747784        0.730090        0.711983        0.693480        0.674531
+42.230  0.808179        0.802188        0.783405        0.766599        0.749967        0.732518        0.714662        0.696410        0.677723
+69.940  0.809532        0.803627        0.785100        0.768529        0.752127        0.734918        0.717301        0.699301        0.680865
+90.632  0.810547        0.804707        0.786366        0.769966        0.753731        0.736691        0.719258        0.701437        0.683187
+118.211 0.811883        0.806129        0.788038        0.771860        0.755843        0.739038        0.721835        0.704256        0.686248
+145.790 0.813225        0.807552        0.789697        0.773734        0.757926        0.741345        0.724378        0.707023        0.689258
+173.369 0.814552        0.808956        0.791332        0.775586        0.759992        0.743628        0.726880        0.709757        0.692223
+200.948 0.815870        0.810355        0.792962        0.777418        0.762022        0.745876        0.729348        0.712445        0.695138
+228.527 0.817183        0.811741        0.794567        0.779229        0.764034        0.748095        0.731775        0.715087        0.698009
+256.106 0.818492        0.813122        0.796161        0.781018        0.766017        0.750278        0.734167        0.717695        0.700828
+311.264 0.821073        0.815847        0.799305        0.784537        0.769903        0.754556        0.738845        0.722772        0.706323
+366.422 0.823640        0.818543        0.802382        0.787971        0.773688        0.758708        0.743370        0.727692        0.711635
+435.370 0.826798        0.821853        0.806142        0.792151        0.778279        0.763727        0.748833        0.733596        0.718013
+490.528 0.829287        0.824457        0.809084        0.795400        0.781831        0.767602        0.753036        0.738137        0.722899
+900.000 0.847760        0.843786        0.830923        0.819527        0.808205        0.796365        0.784232        0.771855        0.759173
+#
+    PVT_water (optional)
+# First row temperatures [deg. C]
+# Other rows pressure [bar] and densities [g/cc]
+#
+# 1.58 sg Potassium Formate. Data are taken from
+# "Westport TENOLOGY CENTER INTERNATIONAL"-report page 27
+#   deg F    39.2     68.0   149.0   199.9  309.2   350.1
+                4               20              65              93              154             176
+        1       1.092523684     1.083156627     1.05853027      1.049257074     1.018027996     0.971104073
+        4.14    1.093176207     1.085102741     1.05931555      1.049321696     1.018525834     0.982538535
+        6.89    1.093745331     1.085790041     1.060017456     1.049302728     1.018974303     0.992607613
+        17.24   1.094126079     1.086777765     1.061406036     1.050173134     1.02011119      1.006388962
+        34.47   1.094775848     1.087275805     1.062309399     1.050792782     1.020677592     1.008886181
+        51.71   1.095527622     1.087610182     1.062541498     1.051511291     1.021612972     1.009874915
+        68.95   1.095994831     1.087990493     1.062841639     1.051925531     1.022263056     1.010844601
+        103.42  1.096762198     1.089213929     1.063674022     1.05272373      1.023179189     1.012026779
+        137.9   1.097077835     1.08972718      1.064472384     1.0533395       1.023844304     1.012657581
+        172.37  1.097641094     1.090107435     1.065425432     1.05373473      1.02494281      1.013824723
+        344.74  1.10096767      1.093357128     1.068618819     1.057189996     1.029051512     1.018283138
+        517.11  1.091051897     1.09677044      1.072313508     1.06083521      1.032433622     1.021900983
+        689.48  1.09335598      1.100035496     1.075540962     1.0641424       1.03642855      1.026432065
+        1034.21 1.098180471     1.105630653     1.081964902     1.070172313     1.043673482     1.033642316
+        1378.95 1.103330693     1.111640143     1.088942706     1.076608503     1.050417882     1.041373992
+#
+Rheology
+        Rheology_Temperature {deg. C}
+        50
+# {pressure} {600 300 200 100  60  30   6   3}
+# {  bar   } {             RPM               }
+	  1			62	40	32	23	19	15	10	9
+	103			70	42	34	24	19	15	11	10			
+#
+        Rheology_Temperature {deg. C}
+        70
+# {pressure} {600 300 200 100  60  30   6   3}
+# {  bar   } {             RPM               }
+	138			63	40	34	24	20	17	13	13
+	172			66	42	35	25	21	17	13	13
+#
+        Rheology_Temperature {deg. C}
+        100
+# {pressure} {600 300 200 100  60  30   6   3}
+# {  bar   } {             RPM               }
+	207			62	42	35	26	23	19	16	16
+	241			65	42	35	26	22	19	15	15
+#
+        Rheology_Temperature {deg. C}
+        120
+# {pressure} {600 300 200 100  60  30   6   3}
+# {  bar   } {             RPM               }
+	276			59	40	33	25	22	19	15	15
+	310			60	39	32	24	21	18	14	14
+#
+        Rheology_Temperature {deg. C}
+        120
+# {pressure} {600 300 200 100  60  30   6   3}
+# {  bar   } {             RPM               }
+	345			56	36	30	23	20	17	13	12
+	414			59	38	31	23	20	17	13	12
+#
+#
+    Heat_Transfer
+# Cp= Cp0+ Cp1*T[K]
+# {Specific heat Cp0}  {Specific heat Cp1} {Thermal conductivity}
+# { J/(kg.degC) }         { J/(kg) }        { W/(m.degC)}
+     1358D0                 0D0               0.5
+# Calculated (ideally) thermal conductivity at zero deg C was 0.38. Increase to account for disturbances etc.
+
+#----------------------------------
+FLUID_NAME Case_2a1_Fluid
+#------------^------------------^---
+#
+#
+Density (density is required, model number is optional)
+# { density }  {density model } {Density ref temp}
+# {   sg    }  {      -       } {   deg C        }
+     1.38848            6                15
+#
+ Fluid_Components (optional)
+# If missing, 100 % water phase is assumed.
+# {volume % } {    densities     } {  density model } {Density ref temp}
+# {oil water} {oil   water solid } { oil water solid} { oil     water  }
+# { %    %  } { sg    sg    sg   } {                } {    deg C       }
+   73.8 26.2     0.78  1.21   4.00      7   5    -1        15       15
+#
+    PVT_oil
+# First row temperatures [deg. C]
+# Other rows pressure [bar] and densities [g/cc]
+        4               20              50              75              100             125             150             175             200
+1.000   0.806125        0.800000        0.780827        0.763662        0.746678        0.728862        0.710629        0.691998        0.672913
+14.790  0.806817        0.800736        0.781693        0.764649        0.747784        0.730090        0.711983        0.693480        0.674531
+42.230  0.808179        0.802188        0.783405        0.766599        0.749967        0.732518        0.714662        0.696410        0.677723
+69.940  0.809532        0.803627        0.785100        0.768529        0.752127        0.734918        0.717301        0.699301        0.680865
+90.632  0.810547        0.804707        0.786366        0.769966        0.753731        0.736691        0.719258        0.701437        0.683187
+118.211 0.811883        0.806129        0.788038        0.771860        0.755843        0.739038        0.721835        0.704256        0.686248
+145.790 0.813225        0.807552        0.789697        0.773734        0.757926        0.741345        0.724378        0.707023        0.689258
+173.369 0.814552        0.808956        0.791332        0.775586        0.759992        0.743628        0.726880        0.709757        0.692223
+200.948 0.815870        0.810355        0.792962        0.777418        0.762022        0.745876        0.729348        0.712445        0.695138
+228.527 0.817183        0.811741        0.794567        0.779229        0.764034        0.748095        0.731775        0.715087        0.698009
+256.106 0.818492        0.813122        0.796161        0.781018        0.766017        0.750278        0.734167        0.717695        0.700828
+311.264 0.821073        0.815847        0.799305        0.784537        0.769903        0.754556        0.738845        0.722772        0.706323
+366.422 0.823640        0.818543        0.802382        0.787971        0.773688        0.758708        0.743370        0.727692        0.711635
+435.370 0.826798        0.821853        0.806142        0.792151        0.778279        0.763727        0.748833        0.733596        0.718013
+490.528 0.829287        0.824457        0.809084        0.795400        0.781831        0.767602        0.753036        0.738137        0.722899
+900.000 0.847760        0.843786        0.830923        0.819527        0.808205        0.796365        0.784232        0.771855        0.759173
+#
+    PVT_water (optional)
+# First row temperatures [deg. C]
+# Other rows pressure [bar] and densities [g/cc]
+#
+# 1.58 sg Potassium Formate. Data are taken from
+# "Westport TENOLOGY CENTER INTERNATIONAL"-report page 27
+#   deg F    39.2     68.0   149.0   199.9  309.2   350.1
+                4               20              65              93              154             176
+        1       1.092523684     1.083156627     1.05853027      1.049257074     1.018027996     0.971104073
+        4.14    1.093176207     1.085102741     1.05931555      1.049321696     1.018525834     0.982538535
+        6.89    1.093745331     1.085790041     1.060017456     1.049302728     1.018974303     0.992607613
+        17.24   1.094126079     1.086777765     1.061406036     1.050173134     1.02011119      1.006388962
+        34.47   1.094775848     1.087275805     1.062309399     1.050792782     1.020677592     1.008886181
+        51.71   1.095527622     1.087610182     1.062541498     1.051511291     1.021612972     1.009874915
+        68.95   1.095994831     1.087990493     1.062841639     1.051925531     1.022263056     1.010844601
+        103.42  1.096762198     1.089213929     1.063674022     1.05272373      1.023179189     1.012026779
+        137.9   1.097077835     1.08972718      1.064472384     1.0533395       1.023844304     1.012657581
+        172.37  1.097641094     1.090107435     1.065425432     1.05373473      1.02494281      1.013824723
+        344.74  1.10096767      1.093357128     1.068618819     1.057189996     1.029051512     1.018283138
+        517.11  1.091051897     1.09677044      1.072313508     1.06083521      1.032433622     1.021900983
+        689.48  1.09335598      1.100035496     1.075540962     1.0641424       1.03642855      1.026432065
+        1034.21 1.098180471     1.105630653     1.081964902     1.070172313     1.043673482     1.033642316
+        1378.95 1.103330693     1.111640143     1.088942706     1.076608503     1.050417882     1.041373992
+#
+Rheology											
+        Rheology_Temperature {deg. C}											
+	50										
+# {pressure} {600 300 200 100  60  30   6   3}											
+# {  bar   } {             RPM               }											
+	1			64	40	32	22	-1	-1	8	7
+	103			72.3	42.0	34.0	23.0	-1	-1	8.8	7.8
+#											
+        Rheology_Temperature {deg. C}											
+	70										
+# {pressure} {600 300 200 100  60  30   6   3}											
+# {  bar   } {             RPM               }											
+	138			65.0	40.0	34.0	23.0	-1	-1	10.4	10.1
+	172			68.1	42.0	35.0	23.9	-1	-1	10.4	10.1
+#											
+        Rheology_Temperature {deg. C}											
+	100										
+# {pressure} {600 300 200 100  60  30   6   3}											
+# {  bar   } {             RPM               }											
+	207			64.0	42.0	35.0	24.9	-1	-1	12.8	12.4
+	241			67.1	42.0	35.0	24.9	-1	-1	12.0	11.7
+#											
+        Rheology_Temperature {deg. C}											
+	120										
+# {pressure} {600 300 200 100  60  30   6   3}											
+# {  bar   } {             RPM               }											
+	276			60.9	40.0	33.0	23.9	-1	-1	12.0	11.7
+	310			61.9	39.0	32.0	23.0	-1	-1	11.2	10.9
+#											
+        Rheology_Temperature {deg. C}											
+	120										
+# {pressure} {600 300 200 100  60  30   6   3}											
+# {  bar   } {             RPM               }											
+	345			57.8	36.0	30.0	22.0	-1	-1	10.4	9.3
+	414			60.9	38.0	31.0	22.0	-1	-1	10.4	9.3
+#
+    Heat_Transfer
+# Cp= Cp0+ Cp1*T[K]
+# {Specific heat Cp0}  {Specific heat Cp1} {Thermal conductivity}
+# { J/(kg.degC) }         { J/(kg) }        { W/(m.degC)}
+     1434D0                 0D0               0.75
+# Calculated (ideally) thermal conductivity at zero deg C was 0.38. Increase to account for disturbances etc.
+#
+END DRILLING_FLUID_PROPERTIES
+#
+
+Cuttings Slip
+   More
+#
+BOUNDARY
+# Two boundary conditions can be specified for the CMP case; the first
+# of these must apply on the upstream side of the CMP pump and the
+# second on the downstream side.
+#
+# Units: Pressure bar, ECD g/cc
+#   {Condition}      {value}
+#     BH_pressure     340.0
+#      BH_ecd            1.6
+	CHOKE_pressure    1.01325
+#     ECD_vs_depth      3     2480
+#
+#
+#
+TEMP MODE
+# Valid modes: DYNAMIC and STATIC.
+  DYNAMIC
+#  
+TEMPERATURE
+# NOTE: Not used if TEMP MODE is DYNAMIC
+# {Depth}  {T DS}  {T Ann}
+	0				15				15
+	100				15				15
+	600				15				15
+	3000			45				45
+#  
+SURFACE_TEMPERATURE
+8.0D0
+#
+FORM_LAYERS
+# Specific Heat: Cp= Cp0+ Cp1*T[K]
+# Name       top md        vert.temp.grad   density     spec.heat Cp0   spec. heat Cp1    conductivity
+#             [m]             [degC/m]      [kg/m3]     [J/(kg.degC)]     [J/(kg)]        [W/(m.degC)]
+airgap           0.0     	0.0D0      	1.5D0        	1.0D1            	0.0D0           0.01D0
+seawater1        80.7     	-0.0134D0    	1013D0        	4.18D3           	0.0D0           0.58D0
+formation1     	 442     	0.0300D0     	2200D0        	0.9D3            	0.0D0           2.0D0
+formation2     2925     	0.0450D0     	2500D0        	0.9D3            	0.0D0           2.0D0	
+#  
+PORE PRESSURE ECD
+
+#Pore pressure vs MD
+# { MD } {ECD}
+        1659.853463  1.0
+        1725.743556  1.2
+        2410.392365  1.28
+        2748.818731  1.4
+        2872.738805  1.64
+        2969.074896  1.92
+        3026.322829  1.86
+#
+FRACTURE PRESSURE ECD
+# Fracture ECD vs MD
+# { MD } {ECD}
+        1406.372617  1.4
+        2024.705749  1.44
+        2563.063779  1.44
+        2594.035156  1.7
+        2872.738805  1.44
+        2919.32188   1.92
+OBSERVATION POINT
+# Location:
+#    0: Annulus
+#    1: Inside DS
+# State:
+#    0: Position is fixed, MD RKB
+#    1: Move with drillstring, position is then given as distance from bottom
+#       of running string (positive when above).
+#  { pos } {location} {state}
+#  {  m  } {    -   } {  -  }
+     2400         0        0      
+CREATE_LOG : YES              
+#
+OPERATIONS FROM: Case_5m_rot_operation.in
